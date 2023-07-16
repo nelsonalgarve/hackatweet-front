@@ -21,7 +21,7 @@ const user = useSelector((state) => state.user.value);
     
       <li
         key={props.id}
-        className="relative bg-gradient-to-r from-indigo-900  px-4 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-50"
+        className="relative bg-gradient-to-r from-indigo-900  px-4 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-800"
       >
         <div className="flex justify-between space-x-3">
           <div className="min-w-0 flex-1">
