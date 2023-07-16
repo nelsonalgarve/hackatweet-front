@@ -20,15 +20,15 @@ return (
 
   <ul role="list" className="divide-y divide-gray-800">
 
-    <li key={props.id} className="flex justify-between gap-x-6 py-5">
+    <li key={props.id} className="flex  gap-x-6 py-5">
       <div className="flex gap-x-4">
         <img className="h-12 w-12 flex-none rounded-full bg-gray-800" src={"AdobeStock_607848635.png"} alt="" />
         <div className="min-w-0 flex-auto">
           <p className="text-sm font-semibold leading-6 text-white">{props.user.fisrtame}</p>
-          <p className="mt-1 truncate text-xs leading-5 text-gray-400">{}</p>
+          <p className="mt-1  text-xs leading-5 text-gray-400">@{props.user.username}</p>
         </div>
       </div>
-      <div className="hidden sm:flex sm:flex-col sm:items-end">
+      <div className=" sm:flex sm:flex-column sm:items-end px-1">
         <p className="text-sm leading-6 text-white">{props.tweet.message}</p>
         {/* {person.lastSeen ? (
           <p className="mt-1 text-xs leading-5 text-gray-400">
@@ -36,7 +36,7 @@ return (
           </p>
         ) : ( */}
         { user.token ? (
-          <div className="mt-1 flex items-center gap-x-1.5">
+          <div className="mt-1 flex items-center gap-x-1.5 self-end ">
             <div className="flex-none rounded-full bg-emerald-500/20 p-1">
               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             </div>
