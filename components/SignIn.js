@@ -1,15 +1,13 @@
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../reducers/user';
-import { redirect } from 'next/navigation';
 import { router } from 'next/router';
 
 function Signin() {
-    const user = useSelector((state) => state.user.value);
-    const dispatch = useDispatch();
-    const [signInUsername, setSignInUsername] = useState('');
-    const [signInFirstname, setSignInFirstname] = useState('');
-    const [signInPassword, setSignInPassword] = useState('');
+  const dispatch = useDispatch();
+  const [signInUsername, setSignInUsername] = useState('');
+  const [signInPassword, setSignInPassword] = useState('');
+  const user = useSelector((state) => state.user.value);
 
   useEffect(() => {
 
@@ -29,7 +27,7 @@ function Signin() {
                    dispatch(login({firstname: data.firstname, username: signInUsername, token: data.token, id: data.userId }));
                     console.log("i am connected", user)// return <Home />
                     if (user.token) {
-                      setSignInFirstname('');
+                      setSignInPassword('');
                       setSignInUsername('');
                       router.push('/home')
 

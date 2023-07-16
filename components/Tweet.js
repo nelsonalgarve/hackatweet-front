@@ -5,33 +5,33 @@ import { Bars3Icon, ChevronRightIcon, ChevronUpDownIcon, MagnifyingGlassIcon } f
 function Tweet (props) {
 
 const user = useSelector((state) => state.user.value);
-
-// useEffect(() => {
-//   fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweets')
-//   .then(response => response.json())
-//   .then(data => {
-//     console.log('from useEffect', data.tweets);
-//     setTweets(data.tweets)
-//   })
-// },[submit])
+console.log(props.hashtag);
+const handleClickDelete = () => {
+  console.log(props.hashtag);
+  fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweet', {
+  method: 'DELETE',
+  headers: { 'Content-Type': 'application/json' },
+ body: JSON.stringify({ hashtag: props.hashtag}),
+})
+  .then(res => res.json())
+  .then(data => {
+      console.log(data);
+  })
+  .catch(err => console.log(err));
+}
 
 
  return (
   <ul role="list" className="divide-y divide-gray-200">
-    
       <li
         key={props.id}
-        className="relative bg-gradient-to-r from-indigo-900  px-4 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-800 shadow-md
-
-        "
-      >
+        className="relative bg-gradient-to-r from-indigo-900  px-4 py-5 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 hover:bg-gray-800 shadow-md">
+        
         <div className="flex justify-between space-x-3">
           <div className="min-w-0 flex-1">
-            <a href="#" className="block focus:outline-none">
               <span className="absolute inset-0" aria-hidden="true" />
               <p className="truncate text-sm font-medium text-white">{props.user.firstname}@{props.user.username}</p>
-              <p className="truncate text-sm text-white-500">{props.hashtag}</p>
-            </a>
+              <p className="truncate text-sm text-indigo-400">{props.hashtag}</p>
           </div>
           <time dateTime={'21/07/2023'} className="flex-shrink-0 whitespace-nowrap text-sm text-white">
             21/07/2023
@@ -40,93 +40,19 @@ const user = useSelector((state) => state.user.value);
         <div className="mt-1">
           <p className="line-clamp-2 text-sm text-white">{props.tweet.message}</p>
         </div>
-        {
-          props.remove ?  <div>  
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-</svg>
-
-        </div> : ''
-
-        }
-       
-
       </li>
-  
+        {props.remove ? 
+        <div>  
+          <button type="button" onClick={() => handleClickDelete()}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                </svg>
+          </button>
+        </div> : ''
+        }
   </ul>
 )
 
-// (
-
-//   <ul role="list" className="divide-y divide-gray-800">
-
-//     <li key={props.id} className="flex  gap-x-6 py-5">
-//       <div className="flex gap-x-4">
-//         <img className="h-12 w-12 flex-none rounded-full bg-gray-800" src={"AdobeStock_607848635.png"} alt="" />
-//         <div className="min-w-0 flex-auto">
-//           <p className="text-sm font-semibold leading-6 text-white">{props.user.fisrtame}</p>
-//           <p className="mt-1  text-xs leading-5 text-gray-400">@{props.user.username}</p>
-//         </div>
-//       </div>
-//       <div className=" sm:flex sm:flex-column sm:items-end px-1">
-//         <p className="text-sm leading-6 text-white">{props.tweet.message}</p>
-//         {/* {person.lastSeen ? (
-//           <p className="mt-1 text-xs leading-5 text-gray-400">
-//             Last seen <time dateTime={person.lastSeenDateTime}>{person.lastSeen}</time>
-//           </p>
-//         ) : ( */}
-//         { user.token ? (
-//           <div className="mt-1 flex items-center gap-x-1.5 self-end ">
-//             <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-//               <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-//             </div>
-//             <p className="text-xs leading-5 text-gray-400">Online</p>
-//           </div>
-
-//         ): <div className="mt-1 flex items-center gap-x-1.5">
-//         <div className="flex-none rounded-full bg-emerald-500/20 p-1">
-//           <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/20" />
-//         </div>
-//         <p className="text-xs leading-5 text-gray-400">Offline</p>
-//       </div>}
-//       </div>
-//     </li>
-// </ul>
-// )
-   
-        // <li key={props.id} className="relative flex items-center space-x-4 px-4 py-4 sm:px-6 lg:px-8">
-        //   <div className="min-w-0 flex-auto">
-        //     <div className="flex items-center gap-x-3">
-        //       <div className="flex-none rounded-full p-1">
-        //         <div className="h-2 w-2 rounded-full bg-current" />
-        //       </div>
-        //       <h2 className="min-w-0 text-sm font-semibold leading-6 text-white">
-        //         <a href='/' className="flex gap-x-2">
-        //           <span className="truncate">{props.tweet.message}</span>
-        //           {/* <span className="text-gray-400">/</span> */}
-        //           <span className="whitespace-nowrap">{props.hashtag}</span>
-        //           <span className="absolute inset-0" />
-        //         </a>
-        //       </h2>
-        //     </div>
-        //     <div className="mt-3 flex items-center gap-x-2.5 text-xs leading-5 text-gray-400">
-        //       <p className="truncate">{props.user.username}</p>
-        //       <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 flex-none fill-gray-300">
-        //         <circle cx={1} cy={1} r={1} />
-        //       </svg>
-        //       <p className="whitespace-nowrap">props.hashtag</p>
-        //     </div>
-        //   </div>
-        //   <div
-        //     className='rounded-full flex-none py-1 px-2 text-xs font-medium ring-1 ring-inset'
-        //   >
-        //     TEST
-        //   </div>
-        //   <ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-        // </li>
-      
-
-    
 }
 
 export default Tweet;
