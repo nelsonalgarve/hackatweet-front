@@ -24,6 +24,7 @@ function Home() {
   const [message, setMessage] = useState('');
   const [submit, setSubmit]   = useState(false);
   const [tweets, setTweets]   = useState([]);
+  // const [canRemove, setCanremove] = useState([]);
   const user = useSelector((state) => state.user.value); 
   // const canDelete = useSelector((state) => state.delete.value); 
   console.log(user);
@@ -33,13 +34,17 @@ function Home() {
   fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweets')
   .then(response => response.json())
   .then(data => {
-    console.log('from useEffect', data.tweets);
+    // console.log('from useEffect', data.tweets);
     setTweets(data.tweets)
   })
 },[submit])
 
-const tweetList = tweets.map((tweet,i ) => {
-  return <Tweet  key={tweet._id} {...tweet}/>
+const tweetList = tweets.map((tweet) => {
+      let canRemove = false;
+   if( tweet.user._id === user.id) {
+      canRemove = true;
+   }
+  return <Tweet  key={tweet._id} {...tweet} remove={canRemove}/>
 })
 console.log('tweet List', tweetList);
 
@@ -55,6 +60,7 @@ body: JSON.stringify({ message: message, userId: user.id}),
 .then( data => {
     if (data.result) {
         console.log("Tweet Saved", data);
+        setMessage('');
         setSubmit(false);
     }
   })

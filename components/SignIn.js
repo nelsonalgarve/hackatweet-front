@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../reducers/user';
 import { redirect } from 'next/navigation';
@@ -11,6 +11,13 @@ function Signin() {
     const [signInFirstname, setSignInFirstname] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
 
+  useEffect(() => {
+
+    if (user.token) {
+      router.push('/home')
+    }
+  }, [])
+
     const handleConnection = (e) => {
         fetch('https://hackatweet-backend-cyan.vercel.app/users/signin', {
             method: 'POST',
@@ -21,9 +28,14 @@ function Signin() {
                 if (data.result) {
                    dispatch(login({firstname: data.firstname, username: signInUsername, token: data.token, id: data.userId }));
                     console.log("i am connected", user)// return <Home />
-                    if (user.token) (
+                    if (user.token) {
+                      setSignInFirstname('');
+                      setSignInUsername('');
                       router.push('/home')
-                    )
+
+                    }
+                      
+                    
                   }
             })
     }
