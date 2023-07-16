@@ -12,17 +12,18 @@ function Signin() {
     const [signInPassword, setSignInPassword] = useState('');
 
     const handleConnection = (e) => {
-        fetch('http://localhost:3000/users/signin', {
+        fetch('https://hackatweet-backend-cyan.vercel.app/users/signin', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ username: signInUsername, password: signInPassword }),
         }).then(response => response.json())
             .then( data => {
                 if (data.result) {
-                   dispatch(login({firstname: signInFirstname, username: signInUsername, token: data.data }));
+                   dispatch(login({firstname: data.firstname, username: signInUsername, token: data.token, id: data.userId }));
                     console.log("i am connected", user)// return <Home />
-                    // e.preventDefault();
-                    router.push('/home')
+                    if (user.token) (
+                      router.push('/home')
+                    )
                   }
             })
     }
