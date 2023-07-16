@@ -18,6 +18,7 @@ export const userSlice = createSlice({
       state.value.token = null;
       state.value.username = null;
       state.value.firstname = null;
+      state.value.id = null;
     },
   },
 });

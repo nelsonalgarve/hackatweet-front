@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../reducers/user';
 // import { canDelete, noDelete } from '../reducers/canDelete';
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import Tweet from '../components/Tweet';
+import { router } from 'next/router'; 
 import {
   ChartBarSquareIcon,
   Cog6ToothIcon,
@@ -19,18 +21,22 @@ import { Bars3Icon, ChevronRightIcon, ChevronUpDownIcon, MagnifyingGlassIcon } f
 // }
 
 function Home() {
-
+  const user = useSelector((state) => state.user.value);
+  const dispatch = useDispatch();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [submit, setSubmit]   = useState(false);
   const [tweets, setTweets]   = useState([]);
   // const [canRemove, setCanremove] = useState([]);
-  const user = useSelector((state) => state.user.value); 
+  
   // const canDelete = useSelector((state) => state.delete.value); 
   console.log(user);
 
-
+// Loading homepage
   useEffect(() => {
+    if (!user.token) {
+        router.push('/')
+    }
   fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweets')
   .then(response => response.json())
   .then(data => {
@@ -38,6 +44,12 @@ function Home() {
     setTweets(data.tweets)
   })
 },[submit])
+
+// logout
+const handleClickLogout = (() => {
+  dispatch(logout());
+  router.push('/')
+})
 
 const tweetList = tweets.map((tweet) => {
       let canRemove = false;
@@ -166,6 +178,13 @@ body: JSON.stringify({ message: message, userId: user.id}),
                     <span className="sr-only">Your profile</span>
                     <span aria-hidden="true">{user.firstname}</span>
                   </a>
+                   <button
+                      onClick={()=> handleClickLogout()}
+                      type="button"
+                      className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      Logout
+                    </button>
                 </li>
               </ul>
             </nav>
