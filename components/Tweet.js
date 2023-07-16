@@ -27,16 +27,16 @@ const user = useSelector((state) => state.user.value);
           <div className="min-w-0 flex-1">
             <a href="#" className="block focus:outline-none">
               <span className="absolute inset-0" aria-hidden="true" />
-              <p className="truncate text-sm font-medium text-gray-900">{props.user.firstname}@{props.user.username}</p>
-              <p className="truncate text-sm text-gray-500">{props.hashtag}</p>
+              <p className="truncate text-sm font-medium text-white">{props.user.firstname}@{props.user.username}</p>
+              <p className="truncate text-sm text-white-500">{props.hashtag}</p>
             </a>
           </div>
-          <time dateTime={'21/07/2023'} className="flex-shrink-0 whitespace-nowrap text-sm text-gray-500">
+          <time dateTime={'21/07/2023'} className="flex-shrink-0 whitespace-nowrap text-sm text-white">
             21/07/2023
           </time>
         </div>
         <div className="mt-1">
-          <p className="line-clamp-2 text-sm text-gray-600">{props.tweet.message}</p>
+          <p className="line-clamp-2 text-sm text-white">{props.tweet.message}</p>
         </div>
       </li>
   
