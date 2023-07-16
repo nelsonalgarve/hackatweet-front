@@ -19,7 +19,8 @@ function SignUp () {
         }).then(response => response.json())
         .then( data => {
             if (data.result) {
-                dispatch(login({firstname: signupFirstname, username: signUpUsername, token: data.token }));
+              //res.json({ result: true, token: user.token, firstName: user.firstname, username: user.username, id: user._id });
+                dispatch(login({firstname: signupFirstname, username: signUpUsername, token: data.token, id: data.id }));
                 console.log("i am registered", router);
                 router.push('/home')
             }
