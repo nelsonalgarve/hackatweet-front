@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../reducers/user';
+import { login, logout } from '../reducers/user';
 import { router } from 'next/router'; 
 // import { redirect } from 'next/navigation';
 

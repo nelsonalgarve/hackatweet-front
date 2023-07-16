@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+// import { canDelete, noDelete } from '../reducers/canDelete';
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import Tweet from '../components/Tweet';
@@ -24,6 +25,7 @@ function Home() {
   const [submit, setSubmit]   = useState(false);
   const [tweets, setTweets]   = useState([]);
   const user = useSelector((state) => state.user.value); 
+  // const canDelete = useSelector((state) => state.delete.value); 
   console.log(user);
 
 
@@ -191,16 +193,7 @@ body: JSON.stringify({ message: message, userId: user.id}),
                     type="text"
                     name="message"
                   />
-         
-                </div>
-                <div>
-                <button
-                    onClick={() => handleMessage()}
-                    type="button"
-                    className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-400 shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                  >
-                   Valider
-                 </button>
+        
                 </div>
               </div>
             </div>
@@ -212,10 +205,13 @@ body: JSON.stringify({ message: message, userId: user.id}),
 
               {/* Sort dropdown */}
               <Menu as="div" className="relative">
-                <Menu.Button className="flex items-center gap-x-1 text-sm font-medium leading-6 text-white">
-                  Sort by
-                  <ChevronUpDownIcon className="h-5 w-5 text-gray-500" aria-hidden="true" />
-                </Menu.Button>
+              <button
+                    onClick={() => handleMessage()}
+                    type="button"
+                    className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold leading-6 text-gray-400 shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                  >
+                   Send
+                 </button>
                 <Transition
                   as={Fragment}
                   enter="transition ease-out duration-100"

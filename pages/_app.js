@@ -3,6 +3,7 @@ import '@/styles/globals.css';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 import user from '../reducers/user';
+// import like from '../reducers/canDelete';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
