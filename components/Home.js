@@ -37,13 +37,29 @@ function Home() {
     if (!user.token) {
         router.push('/')
     }
+    setSubmit(true);
   fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweets')
   .then(response => response.json())
   .then(data => {
-    // console.log('from useEffect', data.tweets);
     setTweets(data.tweets)
+    setSubmit(false);
   })
 },[submit])
+
+const deleteTweet = (tweet) => {
+  console.log('deleteTweet-home.js', tweet);
+  fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweet', {
+  method: 'DELETE',
+  headers: { 'Content-Type': 'application/json' },
+ body: JSON.stringify({ hashtag: tweet}),
+})
+  .then(res => res.json())
+  .then(data => {
+      console.log(data);
+      setSubmit(true);
+  })
+  .catch(err => console.log(err));
+}
 
 // logout
 const handleClickLogout = (() => {
@@ -56,13 +72,13 @@ const tweetList = tweets.map((tweet) => {
    if( tweet.user._id === user.id) {
       canRemove = true;
    }
-  return <Tweet  key={tweet._id} {...tweet} remove={canRemove}/>
+  return <Tweet  key={tweet._id} {...tweet} remove={canRemove} deleteTweet={deleteTweet}/>
 })
 console.log('tweet List', tweetList);
 
 
 const handleMessage = () => {
-  setSubmit(true);
+  
   if (user.token){
   fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweet', {
     method: 'POST',
@@ -73,10 +89,12 @@ body: JSON.stringify({ message: message, userId: user.id}),
     if (data.result) {
         console.log("Tweet Saved", data);
         setMessage('');
-        setSubmit(false);
+        setSubmit(true);
     }
   })
 }}
+
+
 
   return (
     <>

@@ -6,19 +6,11 @@ function Tweet (props) {
 
 const user = useSelector((state) => state.user.value);
 console.log(props.hashtag);
-const handleClickDelete = () => {
-  console.log(props.hashtag);
-  fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweet', {
-  method: 'DELETE',
-  headers: { 'Content-Type': 'application/json' },
- body: JSON.stringify({ hashtag: props.hashtag}),
-})
-  .then(res => res.json())
-  .then(data => {
-      console.log(data);
-  })
-  .catch(err => console.log(err));
-}
+
+  const handleClickDelete = () => {
+    console.log("handleClickDelete", props.hashtag);
+    props.deleteTweet(props.hashtag);
+  }
 
 
  return (
