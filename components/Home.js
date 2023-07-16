@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import Image from 'next/image'
 import { logout } from '../reducers/user';
 // import { canDelete, noDelete } from '../reducers/canDelete';
 import { Fragment, useState, useEffect } from 'react'
@@ -124,13 +125,13 @@ body: JSON.stringify({ message: message, userId: user.id}),
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 ring-1 ring-white/10">
-                    <div className="flex h-16 shrink-0 items-center">
+                    {/* <div className="flex h-16 shrink-0 items-center">
                       <img
                         className="h-8 w-auto"
                         src="6790689621642398013.svg"
                         alt="Your Company"
                       />
-                    </div>
+                    </div> */}
                     <nav className="flex flex-1 flex-col">
                       
                     </nav>
@@ -145,12 +146,22 @@ body: JSON.stringify({ message: message, userId: user.id}),
         <div className="hidden xl:fixed xl:inset-y-0 xl:z-50 xl:flex xl:w-72 xl:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
-            <div className="flex h-16 shrink-0 items-center p-2 m-4">
+            <div className="flex h-16 shrink-0 items-center p-2 m-10">
               <img
                 className="h-22 w-auto transform -scale-x-100"
                 src="AdobeStock_607848635.png"
                 alt="Your Company"
+                
               />
+              {/* <Image
+                // className="h-22 w-auto transform -scale-x-200"
+                src="/public/AdobeStock_607848635.png"
+                alt="Your Company"
+                width={120}
+                height={120}
+              /> */}
+            
+  
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
