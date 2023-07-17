@@ -37,15 +37,15 @@ function Home() {
     if (!user.token) {
         router.push('/')
     }
-    setSubmit(true);
+    
   fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweets')
   .then(response => response.json())
   .then(data => {
     setTweets(data.tweets)
-    setSubmit(false);
   })
-},[submit])
-
+},[message])
+ 
+// delete tweet
 const deleteTweet = (tweet) => {
   console.log('deleteTweet-home.js', tweet);
   fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweet', {
@@ -55,8 +55,12 @@ const deleteTweet = (tweet) => {
 })
   .then(res => res.json())
   .then(data => {
-      console.log(data);
-      setSubmit(true);
+    fetch('https://hackatweet-backend-cyan.vercel.app/tweets/tweets')
+    .then(response => response.json())
+    .then(data => {
+      setTweets(data.tweets)
+    })
+      
   })
   .catch(err => console.log(err));
 }

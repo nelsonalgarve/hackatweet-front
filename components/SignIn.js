@@ -1,47 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../reducers/user';
 import { router } from 'next/router';
 
-function Signin() {
-  const dispatch = useDispatch();
+function Signin(props) {
+  
   const [signInUsername, setSignInUsername] = useState('');
   const [signInPassword, setSignInPassword] = useState('');
-  const user = useSelector((state) => state.user.value);
+  
 
-  useEffect(() => {
-
-    if (user.token) {
-      router.push('/home')
-    }
-  }, [])
-
-    const handleConnection = (e) => {
-        fetch('https://hackatweet-backend-cyan.vercel.app/users/signin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ username: signInUsername, password: signInPassword }),
-        }).then(response => response.json())
-            .then( data => {
-                if (data.result) {
-                   dispatch(login({firstname: data.firstname, username: signInUsername, token: data.token, id: data.userId }));
-                    console.log("i am connected", user)// return <Home />
-                    if (user.token) {
-                      setSignInPassword('');
-                      setSignInUsername('');
-                      router.push('/home')
-
-                    }
-                      
-                    
-                  }
-            })
-    }
-
-    const handleLogout = () => {
-        dispatch(logout());
-        console.log("i am logged out", user);
-    }
+const handleLogout = () => {
+   
+}
+const handleConnection = () => {
+    props.signin(signInUsername, signInPassword)
+  }    
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8  ">

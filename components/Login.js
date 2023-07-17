@@ -1,13 +1,25 @@
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../reducers/user';
+import { useEffect} from 'react';
 import { useState } from 'react';
 import { Modal } from 'antd';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import { router } from 'next/router';
 
 function Login() {
     const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
     const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+    const user = useSelector((state) => state.user.value);
+    const dispatch = useDispatch();
     
+    useEffect(() => {
+
+      if (user.token) {
+        router.push('/home')
+      }
+    }, [])
+
     const showSigninModal = () => {
         setIsSignInModalOpen(true);
       };
@@ -31,6 +43,26 @@ function Login() {
     const handleCancelSignUp = () => {
         setIsSignUpModalOpen(false)
     }
+
+    const signin = (username, password) => {
+      fetch('https://hackatweet-backend-cyan.vercel.app/users/signin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: username, password: password }),
+      }).then(response => response.json())
+          .then( data => {
+              if (data.result) {
+                 dispatch(login({firstname: data.firstname, username: username, token: data.token, id: data.userId }));
+                  console.log("i am connected", user)// return <Home />
+                  if (user.token) {
+                    // setSignInPassword('');
+                    // setSignInUsername('');
+                    router.push('/home')
+
+                  }
+                }
+          })
+  }
   
     return (
     <div className="relative isolate overflow-hidden bg-gray-900">
@@ -113,7 +145,7 @@ function Login() {
                 Signin
             </button>
             <Modal title="" open={isSignInModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <SignIn />
+                <SignIn signin = {signin}/>
             </Modal>
           
           </div>
