@@ -27,6 +27,7 @@ function Home() {
   const [message, setMessage] = useState('');
   const [submit, setSubmit]   = useState(false);
   const [tweets, setTweets]   = useState([]);
+  const [trends, setTrends]   = useState([]);
   // const [canRemove, setCanremove] = useState([]);
   
   // const canDelete = useSelector((state) => state.delete.value); 
@@ -42,6 +43,13 @@ function Home() {
   .then(response => response.json())
   .then(data => {
     setTweets(data.tweets)
+  })
+
+  fetch('https://hackatweet-backend-cyan.vercel.app/tweets/trends')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    setTrends(data.trends)
   })
 },[message])
  
@@ -78,7 +86,12 @@ const tweetList = tweets.map((tweet) => {
    }
   return <Tweet  key={tweet._id} {...tweet} remove={canRemove} deleteTweet={deleteTweet}/>
 })
-console.log('tweet List', tweetList);
+
+const trendsList = trends.map((trend, i) => {
+  return  <li key={i} className="py-4 text-white">
+  {trend._id} {trend.count}
+</li>;
+})
 
 
 const handleMessage = () => {
@@ -97,6 +110,7 @@ body: JSON.stringify({ message: message, userId: user.id}),
     }
   })
 }}
+
 
 
 
@@ -169,7 +183,7 @@ body: JSON.stringify({ message: message, userId: user.id}),
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-black/10 px-6 ring-1 ring-white/5">
             <div className="flex h-16 shrink-0 items-center p-2 m-4">
               <img
-                className="h-22 w-auto transform -scale-x-100"
+                className="h-22 w-auto transform mt-12 -scale-x-100"
                 src="AdobeStock_607848635.png"
                 alt="Your Company"
               />
@@ -178,11 +192,11 @@ body: JSON.stringify({ message: message, userId: user.id}),
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
                   <ul role="list" className="-mx-2 space-y-1">
-                  <li>teest</li>
+                  <li></li>
                   </ul>
                 </li>
                 <li>
-                  <div className="text-xs font-semibold leading-6 text-gray-400">Your teams</div>
+                  <div className="text-xs font-semibold leading-6 text-gray-400"></div>
                   <ul role="list" className="-mx-2 mt-2 space-y-1">
                    
                   </ul>
@@ -323,13 +337,15 @@ body: JSON.stringify({ message: message, userId: user.id}),
           <aside className="bg-black/10 lg:fixed lg:bottom-0 lg:right-0 lg:top-16 lg:w-96 lg:overflow-y-auto lg:border-l lg:border-white/5">
             <header className="flex items-center justify-between border-b border-white/5 px-4 py-4 sm:px-6 sm:py-6 lg:px-8">
               <h2 className="text-base font-semibold leading-7 text-white">Trends</h2>
+              <p className='text-white'>{trends._id}</p>
               <a href="#" className="text-sm font-semibold leading-6 text-indigo-400">
-                View all
+                {trends._id}
               </a>
             </header>
-            <ul role="list" className="divide-y divide-white/5">
-               <p className='text-white'>TRENDS HASHTAGS</p>
-            </ul>
+            <ul role="list" className="divide-y divide-gray-200">
+     
+            {trendsList}     
+    </ul>
           </aside>
         </div>
       </div>
