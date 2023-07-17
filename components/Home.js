@@ -67,6 +67,12 @@ const deleteTweet = (tweet) => {
     .then(response => response.json())
     .then(data => {
       setTweets(data.tweets)
+      fetch('https://hackatweet-backend-cyan.vercel.app/tweets/trends')
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          setTrends(data.trends)
+  })
     })
       
   })
